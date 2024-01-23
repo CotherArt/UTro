@@ -51,7 +51,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import Card from 'primevue/card'
-import InputText from 'primevue/inputText'
+import InputText from 'primevue/inputtext'
 import Password from 'primevue/password'
 import Button from 'primevue/button'
 import Checkbox from 'primevue/checkbox'
