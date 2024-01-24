@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import GameCard from '@/components/GameCard.vue'
+import Carousel from 'primevue/carousel'
 
 interface GameCardInterface {
   title: string
@@ -12,32 +14,91 @@ interface GameCardInterface {
 const offerGames: GameCardInterface[] = [
   {
     title: 'ELDEN RING',
-    imageURL: 'https://img.pccomponentes.com/pcblog/2677/elden-ring.jpg',
+    imageURL:
+      'https://static.bandainamcoent.eu/high/elden-ring/elden-ring/00-page-setup/elden-ring-new-header-mobile.jpg',
     offerTime: '29 Jan',
-    normalPrice: 200,
-    percentageDiscount: 25
+    normalPrice: 950,
+    percentageDiscount: 32
   },
   {
-    title: 'ELDEN RING',
-    imageURL: 'https://img.pccomponentes.com/pcblog/2677/elden-ring.jpg',
+    title: 'Kingdom come deliverance',
+    imageURL:
+      'https://cdn1.epicgames.com/undefined/offer/EGS_WarhorseStudios_KingdomComeDeliverance_S4-510x680-ec915782c8a2d6f1d64c028dd74a398f.jpg',
     offerTime: '29 Jan',
-    normalPrice: 200,
-    percentageDiscount: 25
+    normalPrice: 800,
+    percentageDiscount: 30
+  },
+  {
+    title: 'Bioshock infinite',
+    imageURL:
+      'https://upload.wikimedia.org/wikipedia/en/a/a3/Official_cover_art_for_Bioshock_Infinite.jpg',
+    offerTime: '29 Jan',
+    normalPrice: 450,
+    percentageDiscount: 12
+  },
+  {
+    title: 'Dark Souls III',
+    imageURL:
+      'https://p325k7wa.twic.pics/high/dark-souls/dark-souls-3/00-page-setup/ds3_game-thumbnail.jpg?twic=v1/resize=760/step=10/quality=80',
+    offerTime: '29 Jan',
+    normalPrice: 650,
+    percentageDiscount: 50
+  },
+  {
+    title: 'Tunic',
+    imageURL: 'https://upload.wikimedia.org/wikipedia/en/8/85/Tunic_cover_art.jpg',
+    offerTime: '29 Jan',
+    normalPrice: 150,
+    percentageDiscount: 80
   }
 ]
+
+const responsiveOptions = ref([
+  {
+    breakpoint: '1400px',
+    numVisible: 3,
+    numScroll: 1
+  },
+  {
+    breakpoint: '1199px',
+    numVisible: 2,
+    numScroll: 1
+  },
+  {
+    breakpoint: '767px',
+    numVisible: 2,
+    numScroll: 1
+  },
+  {
+    breakpoint: '575px',
+    numVisible: 1,
+    numScroll: 1
+  }
+])
 </script>
 
 <template>
-  <h1>Store</h1>
-  <div class="flex gap-2 w-full overflow-x-scroll">
-    <GameCard
-      v-for="item in offerGames"
-      v-bind:key="item.title"
-      :imageURL="item.imageURL"
-      :title="item.title"
-      :offerTime="`Offer ends ${item.offerTime} @ 11:00am.`"
-      :normalPrice="item.normalPrice"
-      :percentageDiscount="item.percentageDiscount"
-    />
+  <h1 class="w-full text-center">Store</h1>
+  <div>
+    <h3>SPECIAL OFFERS</h3>
+    <Carousel
+      :value="offerGames"
+      :numVisible="3"
+      :numScroll="3"
+      :autoplayInterval="3000"
+      circular
+      :responsiveOptions="responsiveOptions"
+    >
+      <template #item="slotProps">
+        <GameCard
+          v-bind:key="slotProps.data.title"
+          :imageURL="slotProps.data.imageURL"
+          :title="slotProps.data.title"
+          :offerTime="`Offer ends ${slotProps.data.offerTime} @ 11:00am.`"
+          :normalPrice="slotProps.data.normalPrice"
+          :percentageDiscount="slotProps.data.percentageDiscount"
+        />
+      </template>
+    </Carousel>
   </div>
 </template>

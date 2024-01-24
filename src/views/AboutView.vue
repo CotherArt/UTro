@@ -1,7 +1,8 @@
 <template>
-  <div>
-    <h1>This is an about page</h1>
-  </div>
+  <main class="flex flex-column align-items-center">
+    <h1>Page in construction</h1>
+    <i class="pi pi-spin pi-cog" style="font-size: 10rem"></i>
+  </main>
 </template>
 
 <style></style>

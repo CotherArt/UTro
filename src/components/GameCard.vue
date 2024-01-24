@@ -5,7 +5,7 @@
       <p class="title-name text-white">{{ title?.toUpperCase() }}</p>
       <p class="offer-time text-gray-100 mb-2 text-xs">{{ offerTime }}</p>
       <div class="discount flex border-round">
-        <span class="percentage bg-green-600 text-green-200 px-1 text-2xl"
+        <span class="percentage bg-green-600 text-green-200 px-2 text-2xl"
           >-{{ percentageDiscount }}%</span
         >
         <div class="prices flex flex-column bg-gray-700 px-2">
