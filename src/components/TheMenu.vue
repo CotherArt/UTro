@@ -85,6 +85,10 @@ const items = ref([
   {
     label: 'SUPPORT',
     command: () => router.push({ name: 'support' })
+  },
+  {
+    label: 'TEST',
+    command: () => router.push({ name: 'test' })
   }
 ])
 </script>
