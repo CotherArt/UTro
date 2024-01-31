@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export const useSteamStore = defineStore('steam', () => {
   const test = async () => {
-    const key = 'CE30A80EE8FC34C1B60EE72E8D03379C'
+    const key = '2918959A690CDD176A92211F0AA1AB20'
     const steamid = '76561198319045204'
     const data = await axios.get(
       `https://api.steampowered.com/ISteamUser/GetFriendList/v1/?key=${key}&steamid=${steamid}`
