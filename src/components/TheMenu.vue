@@ -3,9 +3,8 @@
     <Menubar :model="items">
       <template #start>
         <img
-          width="120px"
-          src="https://store.cloudflare.steamstatic.com/public/shared/images/header/logo_steam.svg?t=962016"
-          class="cursor-pointer"
+          src="../assets/icons/vapor.svg"
+          class="cursor-pointer w-3rem text-white mx-2"
           @click="$router.push({ name: 'home' })"
         />
       </template>
@@ -16,8 +15,13 @@
             <Avatar v-if="user.avatarImage" :image="user.avatarImage" shape="circle" />
             <Avatar v-else icon="pi pi-user" shape="circle" />
           </div>
-          <div v-else>
-            <Button @click="router.push({ name: 'login' })">Login</Button>
+          <div v-else class="flex gap-2">
+            <Button
+              severity="secondary"
+              @click="router.push({ name: 'registrarse' })"
+              label="Registrarse"
+            />
+            <Button @click="router.push({ name: 'iniciar-sesion' })" label="Iniciar Sesión" />
           </div>
         </div>
       </template>
@@ -73,38 +77,12 @@ const items = ref([
     ]
   },
   {
-    label: 'COMMUNITY',
-    items: [
-      {
-        label: 'Home',
-        command: () => router.push({ name: 'community' })
-      },
-      {
-        label: 'Discussions'
-      },
-      {
-        label: 'Workshop'
-      },
-      {
-        label: 'Market'
-      },
-      {
-        label: 'Broadcast'
-      }
-    ]
-  },
-  {
-    label: 'ABOUT',
-    command: () => router.push({ name: 'about' })
-  },
-  {
-    label: 'SUPPORT',
-    command: () => router.push({ name: 'support' })
-  },
-  {
     label: 'TEST',
-    command: () => router.push({ name: 'test' }),
     items: [
+      {
+        label: 'HOME',
+        command: () => router.push({ name: 'test' })
+      },
       {
         label: 'SUB TEST',
         command: () => router.push({ name: 'sub test' })

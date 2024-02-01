@@ -9,14 +9,14 @@ const router = createRouter({
       component: () => import('@/views/StoreView.vue')
     },
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('@/views/auth/LoginView.vue')
+      path: '/iniciar-sesion',
+      name: 'iniciar-sesion',
+      component: () => import('@/views/auth/InicioSesionView.vue')
     },
     {
-      path: '/signup',
-      name: 'signup',
-      component: () => import('@/views/auth/SignUpView.vue')
+      path: '/registrarse',
+      name: 'registrarse',
+      component: () => import('@/views/auth/RegistrarseView.vue')
     },
     {
       path: '/communuty',
