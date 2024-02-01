@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { RouterView, useRoute } from 'vue-router'
+import { RouterView, useRoute, useRouter } from 'vue-router'
 import TheMenu from './components/TheMenu.vue'
-
-const router = useRoute()
-const path = computed(() => router.path)
+import TheBreadcrumb from '@/components/TheBreadcrumb.vue'
 </script>
 
 <template>
   <header>
     <TheMenu />
+    <TheBreadcrumb />
   </header>
 
   <RouterView />

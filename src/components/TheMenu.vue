@@ -103,7 +103,13 @@ const items = ref([
   },
   {
     label: 'TEST',
-    command: () => router.push({ name: 'test' })
+    command: () => router.push({ name: 'test' }),
+    items: [
+      {
+        label: 'SUB TEST',
+        command: () => router.push({ name: 'sub test' })
+      }
+    ]
   }
 ])
 
