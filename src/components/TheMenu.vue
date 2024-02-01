@@ -88,6 +88,10 @@ const items = ref([
         command: () => router.push({ name: 'sub test' })
       }
     ]
+  },
+  {
+    label: 'SITE MAP',
+    command: () => router.push({ name: 'map' })
   }
 ])
 
