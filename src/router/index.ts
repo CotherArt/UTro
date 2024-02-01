@@ -42,6 +42,11 @@ const router = createRouter({
       path: '/test/sub-test',
       name: 'sub test',
       component: () => import('@/views/TestView2.vue')
+    },
+    {
+      path: '/map',
+      name: 'map',
+      component: () => import('@/views/Site_map.vue') 
     }
   ]
 })
