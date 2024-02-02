@@ -49,49 +49,25 @@ const logged = ref<boolean>(false)
 const router = useRouter()
 const items = ref([
   {
-    label: 'LOGIN',
-    command: () => router.push({ name: 'login' })
-  },
-  {
-    label: 'STORE',
+    label: 'TIENDA',
     items: [
       {
-        label: 'Home',
+        label: 'Inicio',
         command: () => router.push({ name: 'home' })
       },
       {
-        label: 'Discovery Queue'
-      },
-      {
-        label: 'Wishlist'
-      },
-      {
-        label: 'Points Shop'
-      },
-      {
-        label: 'News'
-      },
-      {
-        label: 'Stats'
+        label: 'Lista de deseados',
+        command: () => router.push({ name: 'wishlist' })
       }
     ]
   },
   {
-    label: 'TEST',
-    items: [
-      {
-        label: 'HOME',
-        command: () => router.push({ name: 'test' })
-      },
-      {
-        label: 'SUB TEST',
-        command: () => router.push({ name: 'sub test' })
-      }
-    ]
-  },
-  {
-    label: 'SITE MAP',
+    label: 'MAPA DE SITIO',
     command: () => router.push({ name: 'map' })
+  },
+  {
+    label: 'CONTACTO',
+    command: () => router.push({ name: 'contact' })
   }
 ])
 

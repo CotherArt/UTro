@@ -2,8 +2,6 @@
   <div>
     <Button label="test" @click="test()" />
   </div>
-<h1>Perreo Intenso</h1>
-
 </template>
 
 <script setup lang="ts">
