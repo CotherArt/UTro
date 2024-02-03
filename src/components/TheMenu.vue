@@ -114,7 +114,7 @@ const items = ref([
   {
     label: 'SITE MAP',
     command: () => router.push({ name: 'map' })
-  }
+  },
 ])
 
 onMounted(() => {})
