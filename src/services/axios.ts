@@ -1,5 +1,9 @@
 import axios, { type AxiosInstance } from 'axios'
 
+export interface ErrorResponseData {
+  detail?: string
+}
+
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_COONAPI_URL
 })

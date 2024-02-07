@@ -51,17 +51,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onBeforeMount } from 'vue'
+import { ref } from 'vue'
+import router from '@/router'
+// components
 import Card from 'primevue/card'
 import InputText from 'primevue/inputtext'
 import Password from 'primevue/password'
 import Button from 'primevue/button'
 import Checkbox from 'primevue/checkbox'
-
-import { authenticationStore } from '@/stores/authentication'
+// stores
+import { useAuthStore } from '@/stores/auth'
+// models
 import type { LogInByUsernameModel } from '@/models/auth'
 
-const authStore = authenticationStore()
+const authStore = useAuthStore()
 const loading = ref<boolean>(false)
 
 const loginData = ref<LogInByUsernameModel>({
@@ -72,8 +75,11 @@ const remember = ref<boolean>(false)
 
 async function handleSubmit() {
   loading.value = true
-  await authStore.loginByUsername(loginData.value).finally(() => (loading.value = false))
-  console.log(await authStore.validateToken())
+  await authStore.loginByUsername(loginData.value).finally(async () => {
+    loading.value = false
+    await router.push('/')
+    window.location.reload()
+  })
 }
 </script>
 

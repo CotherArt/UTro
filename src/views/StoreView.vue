@@ -1,7 +1,41 @@
+<template>
+  <h1 class="w-full text-center">Store</h1>
+  <div>
+    <h3>SPECIAL OFFERS</h3>
+    <Carousel
+      :value="steamStore.specialOffers"
+      :numVisible="3"
+      :numScroll="3"
+      :autoplayInterval="3000"
+      circular
+      :responsiveOptions="responsiveOptions"
+    >
+      <template #item="slotProps">
+        <GameCard
+          :imageURL="slotProps.data.large_capsule_image"
+          :title="slotProps.data.name"
+          :offerTime="`Offer ends ${slotProps.data.discount_expiration} @ 11:00am.`"
+          :normalPrice="slotProps.data.original_price"
+          :percentageDiscount="slotProps.data.discount_percent"
+        />
+      </template>
+    </Carousel>
+    <!-- <div class="flex gap-1 flex-wrap">
+      <div v-for="game in steamStore.specialOffers" :key="game.id">
+        <img :src="game.header_image" />
+      </div>
+    </div> -->
+  </div>
+</template>
+
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import type { Game } from '@/models/steam'
 import GameCard from '@/components/GameCard.vue'
 import Carousel from 'primevue/carousel'
+
+// store
+import { useSteamStore } from '@/stores/steam'
 
 interface GameCardInterface {
   title: string
@@ -10,6 +44,8 @@ interface GameCardInterface {
   normalPrice: number
   percentageDiscount: number
 }
+
+const steamStore = useSteamStore()
 
 const offerGames: GameCardInterface[] = [
   {
@@ -75,30 +111,8 @@ const responsiveOptions = ref([
     numScroll: 1
   }
 ])
-</script>
 
-<template>
-  <h1 class="w-full text-center">Store</h1>
-  <div>
-    <h3>SPECIAL OFFERS</h3>
-    <Carousel
-      :value="offerGames"
-      :numVisible="3"
-      :numScroll="3"
-      :autoplayInterval="3000"
-      circular
-      :responsiveOptions="responsiveOptions"
-    >
-      <template #item="slotProps">
-        <GameCard
-          v-bind:key="slotProps.data.title"
-          :imageURL="slotProps.data.imageURL"
-          :title="slotProps.data.title"
-          :offerTime="`Offer ends ${slotProps.data.offerTime} @ 11:00am.`"
-          :normalPrice="slotProps.data.normalPrice"
-          :percentageDiscount="slotProps.data.percentageDiscount"
-        />
-      </template>
-    </Carousel>
-  </div>
-</template>
+onMounted(() => {
+  steamStore.getSpecialOffers()
+})
+</script>

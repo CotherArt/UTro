@@ -11,40 +11,34 @@
       <template #end>
         <div class="flex align-items-center gap-2">
           <InputText placeholder="Search" type="text" class="w-8rem sm:w-auto" />
-          <div v-if="logged" class="flex justify-content-center">
-            <Avatar v-if="user.avatarImage" :image="user.avatarImage" shape="circle" />
-            <Avatar v-else icon="pi pi-user" shape="circle" />
-          </div>
-          <div v-else class="flex gap-2">
-            <Button
-              severity="secondary"
-              @click="router.push({ name: 'registrarse' })"
-              label="Registrarse"
-            />
-            <Button @click="router.push({ name: 'iniciar-sesion' })" label="Iniciar Sesión" />
-          </div>
+          <Avatar
+            v-if="authStore.user"
+            :image="authStore.avatarImage"
+            shape="circle"
+            @click="toggle"
+          />
+          <Avatar v-else icon="pi pi-user" shape="circle" @click="toggle" />
         </div>
       </template>
     </Menubar>
+    <Menu ref="userMenu" id="overlay_menu" :model="userMenuItems" :popup="true" />
   </div>
 </template>
 
 <script setup lang="ts">
 //vue
-import { onBeforeMount, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 //stores
-import { userStore } from '@/stores/user'
-import { authenticationStore } from '@/stores/authentication'
+import { useAuthStore } from '@/stores/auth'
 //components
 import Menubar from 'primevue/menubar'
 import InputText from 'primevue/inputtext'
 import Avatar from 'primevue/avatar'
-import Button from 'primevue/button'
+import Menu from 'primevue/menu'
+import type { MenuItem } from 'primevue/menuitem'
 
-const user = userStore()
-const authStore = authenticationStore()
-const logged = ref<boolean>(false)
+const authStore = useAuthStore()
 
 const router = useRouter()
 const items = ref([
@@ -71,11 +65,51 @@ const items = ref([
   }
 ])
 
-onMounted(() => {})
+const loggedItems: MenuItem[] = [
+  {
+    label: 'Mi Perfil',
+    icon: 'pi pi-user',
+    command: () => router.push({ name: 'user' })
+  },
+  {
+    label: 'Cerrar sesión',
+    icon: 'pi pi-sign-out',
+    command: () => logOutHandler()
+  }
+]
 
-onBeforeMount(async () => {
-  logged.value = await authStore.validateToken()
+const offlineItems: MenuItem[] = [
+  {
+    label: 'Iniciar sesión',
+    icon: 'pi pi-sign-in',
+    command: () => router.push({ name: 'login' })
+  },
+  {
+    label: 'Registrarse',
+    icon: 'pi pi-user-edit',
+    command: () => router.push({ name: 'register' })
+  }
+]
+
+const userMenu = ref()
+const userMenuItems = computed(() => {
+  let items: MenuItem[] = []
+  if (authStore.user) {
+    items.push(...loggedItems)
+  } else {
+    items.push(...offlineItems)
+  }
+  return items
 })
+
+const toggle = (event: Event) => {
+  userMenu.value.toggle(event)
+}
+const logOutHandler = () => {
+  authStore.logOut()
+  router.push('/')
+  window.location.reload()
+}
 </script>
 
 <style scoped></style>
