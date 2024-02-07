@@ -9,13 +9,13 @@ const router = createRouter({
       component: () => import('@/views/StoreView.vue')
     },
     {
-      path: '/iniciar-sesion',
-      name: 'iniciar-sesion',
+      path: '/login',
+      name: 'login',
       component: () => import('@/views/auth/InicioSesionView.vue')
     },
     {
-      path: '/registrarse',
-      name: 'registrarse',
+      path: '/register',
+      name: 'register',
       component: () => import('@/views/auth/RegistrarseView.vue')
     },
     {
@@ -24,29 +24,14 @@ const router = createRouter({
       component: () => import('@/views/CommunityView.vue')
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('@/views/AboutView.vue')
-    },
-    {
-      path: '/support',
-      name: 'support',
-      component: () => import('@/views/SupportView.vue')
-    },
-    {
       path: '/test',
       name: 'test',
       component: () => import('@/views/TestView.vue')
     },
     {
-      path: '/test/sub-test',
-      name: 'sub test',
-      component: () => import('@/views/TestView2.vue')
-    },
-    {
       path: '/map',
       name: 'map',
-      component: () => import('@/views/SiteMapView.vue') 
+      component: () => import('@/views/SiteMapView.vue')
     },
   ]
 })

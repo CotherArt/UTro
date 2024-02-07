@@ -9,8 +9,8 @@
           >-{{ percentageDiscount }}%</span
         >
         <div class="prices flex flex-column bg-gray-700 px-2">
-          <strike class="priceDisc text-xs text-right text-gray-200"
-            >Mex$ {{ normalPrice }}.00</strike
+          <span class="priceDisc text-xs text-right text-gray-200 strike-text"
+            >Mex$ {{ normalPrice }}.00</span
           >
           <span class="priceAct text-green-200">Mex$ {{ actualPrice }}</span>
         </div>
@@ -47,5 +47,8 @@ const imageClass = ref<string>(
 <style scoped>
 p {
   margin: 0;
+}
+.strike-text {
+  text-decoration: line-through;
 }
 </style>

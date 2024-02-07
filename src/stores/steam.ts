@@ -1,16 +1,27 @@
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import axios from 'axios'
+import type { Game } from '@/models/steam'
+import type { AxiosResponse } from 'axios'
+import axios from '@/services/axios'
 
 export const useSteamStore = defineStore('steam', () => {
-  const test = async () => {
-    const key = '2918959A690CDD176A92211F0AA1AB20'
-    const steamid = '76561198319045204'
-    const data = await axios.get(
-      `https://api.steampowered.com/ISteamUser/GetFriendList/v1/?key=${key}&steamid=${steamid}`
-    )
-    console.log(data)
-    return data
-  }
+  // STATE
+  const steamSpecialOffers = ref<Game[]>([])
 
-  return { test }
+  // GETTERS
+  const specialOffers = computed<Game[]>(() => steamSpecialOffers.value)
+  // FUNCTIONS
+  async function getSpecialOffers() {
+    axios.get('/steam/special_offers').then((response: AxiosResponse) => {
+      steamSpecialOffers.value = response.data
+    })
+  }
+  return {
+    // state
+    steamSpecialOffers,
+    // getters
+    specialOffers,
+    // functions
+    getSpecialOffers
+  }
 })

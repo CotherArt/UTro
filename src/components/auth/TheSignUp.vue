@@ -33,12 +33,14 @@
             />
           </div>
         </div>
+        <div class="flex flex-column gap-2 mt-2">
+          <InlineMessage v-for="error in errors" :key="error" severity="error">{{
+            error
+          }}</InlineMessage>
+        </div>
       </template>
-      <div>{{ errors }}</div>
       <template #footer>
-        <Button label="Sign in" type="submit" class="w-full" :disabled="loading">
-          <i v-if="loading" class="pi pi-spin pi-spinner w-full text-2xl font-bold"></i>
-        </Button>
+        <Button label="Sign in" type="submit" class="w-full" :loading="loading" />
       </template>
     </Card>
   </form>
@@ -46,15 +48,20 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { authenticationStore } from '@/stores/authentication'
+import { useAuthStore } from '@/stores/auth'
 // components
 import Card from 'primevue/card'
 import InputText from 'primevue/inputtext'
+import InlineMessage from 'primevue/inlinemessage'
 import Password from 'primevue/password'
 import Button from 'primevue/button'
+// models
 import type { SignUpModel } from '@/models/auth'
+import { isAxiosError } from 'axios'
+import router from '@/router'
+import type { ErrorResponseData } from '@/services/axios'
 
-const authStore = authenticationStore()
+const authStore = useAuthStore()
 
 const loading = ref<boolean>(false)
 const errors = ref<string[]>([])
@@ -67,20 +74,29 @@ const formData = ref<SignUpModel>({
 
 function validateForm(data: SignUpModel) {
   const newErrors: string[] = []
-  if (data.email) newErrors.push('campo email requerido')
-  if (data.password) newErrors.push('campo password requerido')
-  if (data.username) newErrors.push('campo username requerido')
-
+  if (!data.username!!) newErrors.push('username required')
+  if (!data.email!!) newErrors.push('email required')
+  if (!data.password!!) newErrors.push('password required')
+  console.log(data)
   errors.value = newErrors
-  return newErrors.length > 0
+  return errors.value.length === 0
 }
 
 async function handleSubmit() {
+  errors.value = []
   if (!validateForm(formData.value)) return
+
   loading.value = true
-  await authStore.register(formData.value).finally(() => (loading.value = false))
+  const response = await authStore.register(formData.value).finally(() => (loading.value = false))
+  if (isAxiosError(response)) {
+    const errorData = response.response?.data as ErrorResponseData
+    if (errorData.detail) {
+      errors.value.push(errorData.detail)
+    }
+    return
+  }
+  await router.push('/').then(() => window.location.reload())
 }
 </script>
 
 <style scoped></style>
-@/services/axios
