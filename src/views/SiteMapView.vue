@@ -1,44 +1,51 @@
 
 <template>
-  <div class="card overflow-x-auto">
-      <OrganizationChart :value="data">
-          <template #default="slotProps">
-              <span>{{ slotProps.node.label }}</span>
-          </template>
-      </OrganizationChart>
-  </div>
+    <OrganizationChart v-model:selectionKeys="selection" :value="data" collapsible selectionMode="multiple">
+        <template #person="slotProps">
+            <div class="flex flex-column">
+                <div class="flex flex-column align-items-center">
+                    <img :alt="slotProps.node.data.name" :src="slotProps.node.data.image" class="mb-3 w-3rem h-3rem" />
+                    <span class="font-bold mb-2">{{ slotProps.node.data.name }}</span>
+                    <v-icon icon="md:home"></v-icon>
+                    <span>{{ slotProps.node.data.title }}</span>
+                </div>
+            </div>
+        </template>
+        <template #default="slotProps">
+            <span>{{ slotProps.node.label }}</span>
+        </template>
+    </OrganizationChart>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref } from "vue";
 import OrganizationChart from 'primevue/organizationchart';
+import 'primeicons/primeicons.css'
 
 
 const data = ref({
     key: '0',
     type: 'person',
     data: {
-        image: 'https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png',
-        name: 'Amy Elsner',
-        title: 'CEO'
+        image: 'https://cdn-icons-png.freepik.com/512/5188/5188738.png?ga=GA1.1.2013646664.1706826289',
+        name: 'INICIO',
     },
     children: [
         {
             key: '0_0',
             type: 'person',
             data: {
-                image: 'https://primefaces.org/cdn/primevue/images/avatar/annafali.png',
-                name: 'Anna Fali',
-                title: 'CMO'
+                image: 'https://cdn-icons-png.freepik.com/512/1179/1179601.png?ga=GA1.1.2013646664.1706826289&amp',
+                name: 'TIENDA',
             },
             children: [
                 {
                     key: '0_0_0',
-                    label: 'Sales'
+                    label: 'HOME'
                 },
                 {
                     key: '0_0_"1',
-                    label: 'Marketing'
+                    label: 'LISTA DE DESEOS'
                 }
             ]
         },
@@ -46,22 +53,30 @@ const data = ref({
             key: '0_1',
             type: 'person',
             data: {
-                image: 'https://primefaces.org/cdn/primevue/images/avatar/stephenshaw.png',
-                name: 'Stephen Shaw',
-                title: 'CTO'
+                image: 'https://cdn-icons-png.freepik.com/512/2508/2508493.png?ga=GA1.1.2013646664.1706826289&amp',
+                name: 'MAPA DE SITIO',
             },
-            children: [
-                {
-                    key: '0_1_0',
-                    label: 'Development'
-                },
-                {
-                    key: '0_1_1',
-                    label: 'UI/UX Design'
-                }
-            ]
+
+        },
+        {
+            key: '0_1',
+            type: 'person',
+            data: {
+                image: 'https://cdn-icons-png.freepik.com/512/1371/1371317.png?ga=GA1.1.2013646664.1706826289&amp',
+                name: 'CONTACTO',
+            },
+
+        },
+        {
+            key: '0_1',
+            type: 'person',
+            data: {
+                image: 'https://cdn-icons-png.freepik.com/512/1650/1650276.png?ga=GA1.1.2013646664.1706826289&amp',
+                name: 'REGISTRO',
+            },
+
         }
     ]
 });
-
+const selection = ref({});
 </script>

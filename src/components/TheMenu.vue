@@ -59,10 +59,6 @@ const items = ref([
     label: 'MAPA DE SITIO',
     command: () => router.push({ name: 'map' })
   },
-  {
-    label: 'CONTACTO',
-    command: () => router.push({ name: 'contact' })
-  }
 ])
 
 const loggedItems: MenuItem[] = [
