@@ -6,14 +6,8 @@
 
 <script setup lang="ts">
 import Button from 'primevue/button'
-import { useSteamStore } from '@/stores/steam'
 
-const steamStore = useSteamStore()
-
-async function test() {
-  const webo = await steamStore.test()
-  console.log(webo)
-}
+async function test() {}
 </script>
 
 <style scoped></style>

@@ -1,10 +1,5 @@
 <template>
-  <Breadcrumb
-    :home="home"
-    :model="crumbs"
-    class="text-sm p-1 px-2 bg-transparent border-0"
-    :pt="{}"
-  >
+  <Breadcrumb :home="home" :model="crumbs" class="text-sm p-1 px-2 bg-transparent border-0">
     <template #item="{ item }">
       <span
         class="cursor-pointer text-blue-200 text-sm"
@@ -20,17 +15,16 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { type MenuItem } from 'primevue/menuitem'
 import { useRoute } from 'vue-router'
 import Breadcrumb from 'primevue/breadcrumb'
 
 const route = useRoute()
-const crumbs = computed<MenuItem[]>(() => craftBread())
+const crumbs = computed(() => craftBread())
 
 function craftBread() {
   const routes = route.path.split('/')
 
-  const rutaslocas: MenuItem[] = []
+  const rutaslocas = []
   for (let i = 2; i <= routes.length; i++) {
     rutaslocas.push({
       label: routes[i - 1],
