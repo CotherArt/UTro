@@ -7,6 +7,7 @@ import axios from '@/services/axios'
 export const useSteamStore = defineStore('steam', () => {
   // STATE
   const steamSpecialOffers = ref<Game[]>([])
+  const steamNewReleases = ref<Game[]>([])
 
   // GETTERS
   const specialOffers = computed<Game[]>(() => steamSpecialOffers.value)
@@ -16,12 +17,20 @@ export const useSteamStore = defineStore('steam', () => {
       steamSpecialOffers.value = response.data
     })
   }
+
+  async function getNewReleases() {
+    axios.get('/steam/new_releases').then((response: AxiosResponse) => {
+      steamNewReleases.value = response.data
+    })
+  }
   return {
     // state
     steamSpecialOffers,
+    steamNewReleases,
     // getters
     specialOffers,
     // functions
-    getSpecialOffers
+    getSpecialOffers,
+    getNewReleases
   }
 })
