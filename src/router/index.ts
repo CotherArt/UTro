@@ -14,6 +14,11 @@ const router = createRouter({
       component: () => import('@/views/auth/InicioSesionView.vue')
     },
     {
+      path: '/restore',
+      name: 'restore',
+      component: () => import('@/views/auth/RestorePasswordView.vue')
+    },
+    {
       path: '/register',
       name: 'register',
       component: () => import('@/views/auth/RegistrarseView.vue')
@@ -37,6 +42,11 @@ const router = createRouter({
       path: '/map',
       name: 'map',
       component: () => import('@/views/SiteMapView.vue')
+    },
+    {
+      path: '/404',
+      name: '404',
+      component: () => import('@/views/404View.vue')
     }
   ]
 })
