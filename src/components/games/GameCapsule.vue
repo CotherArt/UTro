@@ -23,8 +23,8 @@
     </div>
     <div
       v-else-if="props.type === 'long'"
-      style="background-color: #2b004c; max-width: 40rem"
-      class="border-round m-1 flex"
+      style="background-color: #2b004c"
+      class="border-round m-1 flex w-full"
     >
       <div class="w-13rem h-6rem border-round-left" :style="imageClassLong" />
       <div class="flex p-1 align-items-center align-content-between w-full justify-content-between">

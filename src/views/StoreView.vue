@@ -8,16 +8,17 @@
     :numScroll="1"
   >
     <template #item="slotProps">
-      <GameCapsule :game="slotProps.data" />
+      <GameCapsule class="" :game="slotProps.data" />
     </template>
   </Carousel>
   <h2 class="text-center">New Releases</h2>
-  <div class="flex flex-column w-full align-items-center">
+  <div class="flex flex-column w-full align-items-center w-full justify-items-center">
     <GameCapsule
       v-for="game in steamStore.steamNewReleases"
       :key="game.id"
       :game="game"
       type="long"
+      style="max-width: 50rem"
     />
   </div>
 </template>
