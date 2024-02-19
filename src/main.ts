@@ -3,6 +3,7 @@
 import 'primevue/resources/themes/viva-dark/theme.css'
 import 'primeicons/primeicons.css'
 import '/node_modules/primeflex/primeflex.css'
+import 'animate.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

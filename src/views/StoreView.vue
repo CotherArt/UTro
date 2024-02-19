@@ -1,25 +1,27 @@
 <template>
-  <h2 class="text-center">SPECIAL OFFERS</h2>
-  <Carousel
-    :value="steamStore.specialOffers"
-    :responsiveOptions="responsiveOptions"
-    :autoplayInterval="5000"
-    :numVisible="4"
-    :numScroll="1"
-  >
-    <template #item="slotProps">
-      <GameCapsule class="" :game="slotProps.data" />
-    </template>
-  </Carousel>
-  <h2 class="text-center">New Releases</h2>
-  <div class="flex flex-column w-full align-items-center w-full justify-items-center">
-    <GameCapsule
-      v-for="game in steamStore.steamNewReleases"
-      :key="game.id"
-      :game="game"
-      type="long"
-      style="max-width: 50rem"
-    />
+  <div>
+    <h2 class="text-center">SPECIAL OFFERS</h2>
+    <Carousel
+      :value="steamStore.specialOffers"
+      :responsiveOptions="responsiveOptions"
+      :autoplayInterval="5000"
+      :numVisible="4"
+      :numScroll="1"
+    >
+      <template #item="slotProps">
+        <GameCapsule class="" :game="slotProps.data" />
+      </template>
+    </Carousel>
+    <h2 class="text-center">New Releases</h2>
+    <div class="flex flex-column w-full align-items-center w-full justify-items-center">
+      <GameCapsule
+        v-for="game in steamStore.steamNewReleases"
+        :key="game.id"
+        :game="game"
+        type="long"
+        style="max-width: 50rem"
+      />
+    </div>
   </div>
 </template>
 
