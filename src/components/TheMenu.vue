@@ -69,7 +69,7 @@ const loggedItems: MenuItem[] = [
   {
     label: 'Mi Perfil',
     icon: 'pi pi-user',
-    command: () => router.push({ name: 'user' })
+    command: () => router.push({ name: 'settings' })
   },
   {
     label: 'Cerrar sesión',

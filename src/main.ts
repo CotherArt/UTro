@@ -6,6 +6,8 @@ import '/node_modules/primeflex/primeflex.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+// primevue
+import ToastService from 'primevue/toastservice'
 
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -22,10 +24,11 @@ import App from './App.vue'
 import router from './router'
 
 const pinia = createPinia()
-const app = createApp(App)
+export const app = createApp(App)
 
 app.use(pinia)
 app.use(router)
 app.use(PrimeVue)
+app.use(ToastService)
 
 app.mount('#app')
