@@ -14,7 +14,9 @@
           <label for="username">Mensaje:</label>
           <Textarea v-model="value" rows="5" cols="30" />
         </div>
-        <Button label="Enviar" icon="pi pi-check" />
+        <div class="flex justify-content-center mt-4">
+          <Button label="Enviar" icon="pi pi-check" />
+        </div>
       </template>
     </Card>
   </div>

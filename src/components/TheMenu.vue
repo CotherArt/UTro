@@ -56,16 +56,20 @@ const items = ref([
     ]
   },
   {
+    label: 'CONTACT',
+    command: () => router.push({ name: 'contact' })
+  },
+  {
     label: 'MAPA DE SITIO',
     command: () => router.push({ name: 'map' })
-  },
+  }
 ])
 
 const loggedItems: MenuItem[] = [
   {
     label: 'Mi Perfil',
     icon: 'pi pi-user',
-    command: () => router.push({ name: 'user' })
+    command: () => router.push({ name: 'settings' })
   },
   {
     label: 'Cerrar sesión',
