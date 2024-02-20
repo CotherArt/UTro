@@ -22,11 +22,7 @@ onBeforeMount(async () => await authStore.getUser())
   </header>
 
   <RouterView v-slot="{ Component }">
-    <transition
-      leave-active-class="animate__animated animate__fadeOutLeft animate__faster"
-      enter-active-class="animate__animated animate__fadeInRight animate__faster"
-      mode="out-in"
-    >
+    <transition leave-active-class="" enter-active-class="" mode="out-in">
       <component :is="Component"></component>
     </transition>
   </RouterView>
