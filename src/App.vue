@@ -21,11 +21,7 @@ onBeforeMount(async () => await authStore.getUser())
     <TheBreadcrumb />
   </header>
 
-  <RouterView v-slot="{ Component }">
-    <transition leave-active-class="" enter-active-class="" mode="out-in">
-      <component :is="Component"></component>
-    </transition>
-  </RouterView>
+  <RouterView />
 </template>
 
 <style></style>
