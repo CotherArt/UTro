@@ -1,15 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import HomeView from '@/views/StoreView.vue'
-import SiteMapView from '@/views/SiteMapView.vue'
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
       name: 'home',
-      component: () => HomeView
+      component: () => import('@/views/StoreView.vue')
     },
     {
       path: '/login',
@@ -44,7 +41,7 @@ const router = createRouter({
     {
       path: '/map',
       name: 'map',
-      component: SiteMapView
+      component: () => import('@/views/SiteMapView.vue')
     },
     {
       path: '/404',
