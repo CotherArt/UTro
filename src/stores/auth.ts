@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import axios from '@/services/axios'
 // utils
 import { setAccessToken, removeAccessToken } from '@/services/utils'
+import { toastSuccess, toastError } from '@/services/toast'
 // models
 import type { LogInByUsernameModel, SignUpModel } from '@/models/auth'
 import type { AxiosError, AxiosResponse } from 'axios'
@@ -22,9 +23,13 @@ export const useAuthStore = defineStore('authStore', () => {
       .post('/signup', values)
       .then(async (response: AxiosResponse) => {
         await setAccessToken(response.data.access_token)
+        toastSuccess('✨ Usuario registrado correctamente! ✨')
         return response
       })
-      .catch((reason: AxiosError) => reason)
+      .catch((reason: AxiosError) => {
+        toastError('💩 Error al registrar usuario, por favor intente otra vez 💩')
+        return reason
+      })
     return response
   }
 

@@ -23,6 +23,7 @@
               name="username"
               v-model="loginData.username"
               aria-describedby="username-help"
+              :tabindex="1"
             />
           </div>
           <div class="flex flex-column gap-2">
@@ -33,12 +34,20 @@
               input-class="w-full"
               v-model="loginData.password"
               aria-describedby="username-help"
+              :tabindex="2"
             />
           </div>
           <div class="flex align-items-center">
-            <Checkbox id="remember" v-model="remember" />
+            <Checkbox id="remember" v-model="remember" :tabindex="3" />
             <label for="remember" class="ml-2">Remember me</label>
           </div>
+          <RecaptchaV2
+            class="flex justify-content-center mt-4"
+            @widget-id="handleWidgetId"
+            @error-callback="handleErrorCalback"
+            @expired-callback="handleExpiredCallback"
+            @load-callback="handleLoadCallback"
+          />
         </div>
       </template>
       <template #footer>
@@ -59,6 +68,7 @@ import InputText from 'primevue/inputtext'
 import Password from 'primevue/password'
 import Button from 'primevue/button'
 import Checkbox from 'primevue/checkbox'
+import { RecaptchaV2 } from 'vue3-recaptcha-v2'
 // stores
 import { useAuthStore } from '@/stores/auth'
 // models
@@ -66,6 +76,7 @@ import type { LogInByUsernameModel } from '@/models/auth'
 
 const authStore = useAuthStore()
 const loading = ref<boolean>(false)
+const captchaPassed = ref<boolean>(false)
 
 const loginData = ref<LogInByUsernameModel>({
   username: '',
@@ -74,12 +85,29 @@ const loginData = ref<LogInByUsernameModel>({
 const remember = ref<boolean>(false)
 
 async function handleSubmit() {
+  if (!captchaPassed.value) return
   loading.value = true
   await authStore.loginByUsername(loginData.value).finally(async () => {
     loading.value = false
     await router.push('/')
     window.location.reload()
   })
+}
+
+// recaptcha
+const handleWidgetId = (widgetId: number) => {
+  console.log('Widget ID: ', widgetId)
+}
+const handleErrorCalback = () => {
+  console.log('Error callback')
+  captchaPassed.value = false
+}
+const handleExpiredCallback = () => {
+  console.log('Expired callback')
+}
+const handleLoadCallback = (response: unknown) => {
+  console.log('Load callback', response)
+  captchaPassed.value = true
 }
 </script>
 
