@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { Game } from '@/models/steam'
-import type { AxiosResponse } from 'axios'
+import type { AxiosError, AxiosResponse } from 'axios'
 import axios from '@/services/axios'
 
 export const useSteamStore = defineStore('steam', () => {
@@ -23,6 +23,29 @@ export const useSteamStore = defineStore('steam', () => {
       steamNewReleases.value = response.data
     })
   }
+
+  async function getGamesByName(name: string) {
+    const response = await axios
+      .get(`/steam/search_by_name?target_name=${name}`)
+      .then((response: AxiosResponse) => response.data)
+      .catch((reason: AxiosError) => {
+        alert(JSON.stringify(reason.response?.data))
+        return reason
+      })
+    return response
+  }
+
+  async function getGameDetails(app_id: string) {
+    const response = await axios
+      .get(`/steam/game_details?app_id=${app_id}`)
+      .then((response: AxiosResponse) => response)
+      .catch((reason: AxiosError) => {
+        alert(JSON.stringify(reason.response?.data))
+        return reason
+      })
+    return response
+  }
+
   return {
     // state
     steamSpecialOffers,
@@ -31,6 +54,8 @@ export const useSteamStore = defineStore('steam', () => {
     specialOffers,
     // functions
     getSpecialOffers,
-    getNewReleases
+    getNewReleases,
+    getGamesByName,
+    getGameDetails
   }
 })
