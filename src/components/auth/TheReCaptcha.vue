@@ -1,31 +1,36 @@
 <script setup lang="ts">
 import { RecaptchaV2 } from 'vue3-recaptcha-v2'
+import { useField } from 'vee-validate'
 
-const handleWidgetId = (widgetId: number) => {
-  console.log('Widget ID: ', widgetId)
-}
+const props = defineProps({
+  name: String
+})
+
+const handleWidgetId = () => {}
 const handleErrorCalback = () => {
-  console.log('Error callback')
+  setValue('')
 }
 const handleExpiredCallback = () => {
-  console.log('Expired callback')
+  setValue('')
 }
 const handleLoadCallback = (response: unknown) => {
-  console.log('Load callback', response)
+  setValue(response as string)
 }
+
+const { setValue, errorMessage } = useField<string>(() => props.name || '')
 </script>
 
 <template>
-  <RecaptchaV2
-    @widget-id="handleWidgetId"
-    @error-callback="handleErrorCalback"
-    @expired-callback="handleExpiredCallback"
-    @load-callback="handleLoadCallback"
-  />
+  <div class="flex flex-column my-2">
+    <RecaptchaV2
+      :name="name"
+      @widget-id="handleWidgetId"
+      @error-callback="handleErrorCalback"
+      @expired-callback="handleExpiredCallback"
+      @load-callback="handleLoadCallback"
+    />
+    <small :id="`${name}-help`" class="text-red-200" v-if="!!errorMessage">
+      🥵{{ errorMessage }}
+    </small>
+  </div>
 </template>
-
-<style>
-#rc-anchor-alert {
-  background-color: red !important;
-}
-</style>

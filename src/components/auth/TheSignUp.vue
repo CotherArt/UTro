@@ -1,49 +1,33 @@
 <template>
-  <form @submit.prevent="handleSubmit" class="sm:w-28rem w-full my-2">
-    <Card>
-      <template #header>
-        <div class="relative">
-          <div class="overflow-hidden border-round-top">
-            <img
-              src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              style="object-fit: cover; filter: blur(6px); transform: scale(1.1)"
-              class="w-full h-6rem"
-            />
-          </div>
-          <h1 class="text-center w-full absolute m-10 p-0 top-0">Create your account</h1>
-        </div>
-      </template>
-      <template #content>
-        <div class="flex flex-column justify-content-center gap-2">
-          <div class="flex flex-column gap-2">
-            <label for="username">Username:</label>
-            <InputText id="username" name="username" v-model="formData.username" />
-          </div>
-          <div class="flex flex-column gap-2">
-            <label for="email">Email:</label>
-            <InputText id="email" name="email" v-model="formData.email" />
-          </div>
-          <div class="flex flex-column gap-2">
-            <label for="password">Password:</label>
-            <Password
-              id="password"
-              name="password"
-              input-class="w-full"
-              v-model="formData.password"
-            />
-          </div>
-        </div>
-        <div class="flex flex-column gap-2 mt-2">
-          <InlineMessage v-for="error in errors" :key="error" severity="error">{{
-            error
-          }}</InlineMessage>
-        </div>
-      </template>
+  <div v-if="!registered">
+    <Form @submit="handleSubmit" :validation-schema="schema">
+      <Card>
+        <template #title>
+          <div class="text-center">Create your account</div>
+        </template>
+        <template #content>
+          <InputText name="username" label="user name:" />
+          <InputText name="email" label="email:" />
+          <InputText name="password" type="password" label="password:" />
+          <InputText name="passwordConfirm" type="password" label="password confirm:" />
+          <TheReCaptcha class="pt-2" name="recaptcha" />
+          {{ errors }}
+        </template>
+        <template #footer>
+          <Button label="Sign in" type="submit" class="w-full" :loading="loading" />
+        </template>
+      </Card>
+    </Form>
+  </div>
+  <div v-else>
+    <Card class="p-4">
+      <template #title> Congratulations </template>
+      <template #content> you has been registered </template>
       <template #footer>
-        <Button label="Sign in" type="submit" class="w-full" :loading="loading" />
+        <Button label="Log In" type="button" class="w-full" @click="router.push('/login')" />
       </template>
     </Card>
-  </form>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -51,10 +35,13 @@ import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 // components
 import Card from 'primevue/card'
-import InputText from 'primevue/inputtext'
-import InlineMessage from 'primevue/inlinemessage'
-import Password from 'primevue/password'
-import Button from 'primevue/button'
+//custom componets
+import Button from '@/components/custom/Button.vue'
+import InputText from '@/components/custom/InputText.vue'
+import TheReCaptcha from './TheReCaptcha.vue'
+// validation
+import * as yup from 'yup'
+import { Form } from 'vee-validate'
 // models
 import type { SignUpModel } from '@/models/auth'
 import { isAxiosError } from 'axios'
@@ -65,29 +52,25 @@ const authStore = useAuthStore()
 
 const loading = ref<boolean>(false)
 const errors = ref<string[]>([])
+const registered = ref<boolean>(false)
 
-const formData = ref<SignUpModel>({
-  username: '',
-  email: '',
-  password: ''
+const schema = yup.object({
+  username: yup.string().required().min(5),
+  email: yup.string().required().email(),
+  password: yup.string().required().min(6),
+  passwordConfirm: yup
+    .string()
+    .required()
+    .min(6)
+    .oneOf([yup.ref('password')]),
+  recaptcha: yup.string().required()
 })
 
-function validateForm(data: SignUpModel) {
-  const newErrors: string[] = []
-  if (!data.username!!) newErrors.push('username required')
-  if (!data.email!!) newErrors.push('email required')
-  if (!data.password!!) newErrors.push('password required')
-  console.log(data)
-  errors.value = newErrors
-  return errors.value.length === 0
-}
-
-async function handleSubmit() {
-  errors.value = []
-  if (!validateForm(formData.value)) return
-
+async function handleSubmit(values: object) {
   loading.value = true
-  const response = await authStore.register(formData.value).finally(() => (loading.value = false))
+  const response = await authStore
+    .register(values as SignUpModel)
+    .finally(() => (loading.value = false))
   if (isAxiosError(response)) {
     const errorData = response.response?.data as ErrorResponseData
     if (errorData.detail) {
@@ -95,7 +78,7 @@ async function handleSubmit() {
     }
     return
   }
-  await router.push('/').then(() => window.location.reload())
+  registered.value = true
 }
 </script>
 
