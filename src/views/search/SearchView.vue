@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex flex-column w-full align-items-center w-full justify-items-center">
-      <GameCapsule
+      <GameCard
         v-for="game in games"
         :key="game.id"
         :game="game"
@@ -18,8 +18,7 @@ import { useRoute } from 'vue-router'
 import type { Game } from '@/models/steam'
 
 // components
-import GameCapsule from '@/components/games/GameCapsule.vue'
-
+import GameCard from '@/components/UI/cards/GameCard.vue'
 // store
 import { useSteamStore } from '@/stores/steam'
 
@@ -30,5 +29,6 @@ const games = ref<Game[]>([])
 onMounted(async () => {
   const name = route.params.name.toString()
   const response = await steamStore.getGamesByName(name)
+  console.log(response)
 })
 </script>

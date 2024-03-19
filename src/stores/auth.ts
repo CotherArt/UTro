@@ -2,7 +2,7 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from '@/services/axios'
 // utils
-import { setAccessToken, removeAccessToken } from '@/services/utils'
+import { setAccessToken, removeAccessToken } from '@/services/utils/token'
 import { toastSuccess, toastError } from '@/services/toast'
 // models
 import type { LogInByUsernameModel, SignUpModel } from '@/models/auth'

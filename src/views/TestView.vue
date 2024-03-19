@@ -9,6 +9,8 @@
   </Form>
 
   <SimpleForm :inputArray="inputs" :validationSchema="schema" />
+
+  <Button label="toast" @click="handleToastClick"></Button>
 </template>
 
 <script setup lang="ts">
@@ -19,6 +21,7 @@ import Button from '@/components/custom/Button.vue'
 import SimpleForm from '@/components/custom/SimpleForm.vue'
 
 import type { InputTextInterface } from '@/components/custom/SimpleForm.vue'
+import { toastError, toastInfo, toastSuccess, toastWarn } from '@/services/toast'
 
 const inputs: InputTextInterface[] = [
   {
@@ -44,5 +47,12 @@ const schema = yup.object({
 
 const onSubmit = (values: object) => {
   alert(JSON.stringify(values, null, 2))
+}
+
+const handleToastClick = () => {
+  toastInfo('tremendo  canaya 🐛')
+  toastError('tremendo mamawebaso 🐛')
+  toastSuccess('tremendo mamawebaso 🐛')
+  toastWarn('tremendo mamawebaso 🐛')
 }
 </script>

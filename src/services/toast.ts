@@ -1,9 +1,9 @@
 // imports
 import { app } from '@/main'
 
-const lifeTime = 3000
+const LIFE_TIME = 3000
 
-export function toastInfo(body: string = ''): void {
+export function toastInfo(body: string = '', lifeTime = LIFE_TIME): void {
   app.config.globalProperties.$toast.add({
     severity: 'info',
     detail: body,
@@ -11,7 +11,7 @@ export function toastInfo(body: string = ''): void {
   })
 }
 
-export function toastWarn(body: string = ''): void {
+export function toastWarn(body: string = '', lifeTime = LIFE_TIME): void {
   app.config.globalProperties.$toast.add({
     severity: 'warn',
     detail: body,
@@ -19,7 +19,7 @@ export function toastWarn(body: string = ''): void {
   })
 }
 
-export function toastSuccess(body: string = ''): void {
+export function toastSuccess(body: string = '', lifeTime = LIFE_TIME): void {
   app.config.globalProperties.$toast.add({
     severity: 'success',
     detail: body,
@@ -27,7 +27,7 @@ export function toastSuccess(body: string = ''): void {
   })
 }
 
-export function toastError(body: string = ''): void {
+export function toastError(body: string = '', lifeTime = LIFE_TIME): void {
   app.config.globalProperties.$toast.add({
     severity: 'error',
     detail: body,

@@ -11,7 +11,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/auth/InicioSesionView.vue')
+      component: () => import('@/views/auth/LogInView.vue')
     },
     {
       path: '/restore',
@@ -22,11 +22,6 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: () => import('@/views/auth/RegistrarseView.vue')
-    },
-    {
-      path: '/communuty',
-      name: 'community',
-      component: () => import('@/views/CommunityView.vue')
     },
     {
       path: '/contact',
@@ -44,11 +39,6 @@ const router = createRouter({
       component: () => import('@/views/SiteMapView.vue')
     },
     {
-      path: '/404',
-      name: '404',
-      component: () => import('@/views/404View.vue')
-    },
-    {
       path: '/user/settings',
       name: 'settings',
       component: () => import('@/views/user/SettingsView.vue')
@@ -56,7 +46,7 @@ const router = createRouter({
     {
       path: '/search/:name',
       name: 'search',
-      component: () => import('@/views/SearchView.vue')
+      component: () => import('@/views/search/SearchView.vue')
     }
   ]
 })

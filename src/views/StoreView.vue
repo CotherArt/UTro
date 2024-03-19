@@ -9,12 +9,12 @@
       :numScroll="1"
     >
       <template #item="slotProps">
-        <GameCapsule class="" :game="slotProps.data" />
+        <GameCard :game="slotProps.data" />
       </template>
     </Carousel>
     <h2 class="text-center">New Releases</h2>
     <div class="flex flex-column w-full align-items-center w-full justify-items-center">
-      <GameCapsule
+      <GameCard
         v-for="game in steamStore.steamNewReleases"
         :key="game.id"
         :game="game"
@@ -30,7 +30,7 @@ import { onMounted, ref } from 'vue'
 
 // components
 import Carousel from 'primevue/carousel'
-import GameCapsule from '@/components/games/GameCapsule.vue'
+import GameCard from '@/components/UI/cards/GameCard.vue'
 
 // store
 import { useSteamStore } from '@/stores/steam'

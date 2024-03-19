@@ -38,7 +38,7 @@ import Card from 'primevue/card'
 //custom componets
 import Button from '@/components/custom/Button.vue'
 import InputText from '@/components/custom/InputText.vue'
-import TheReCaptcha from './TheReCaptcha.vue'
+import TheReCaptcha from '@/components/custom/TheReCaptcha.vue'
 // validation
 import * as yup from 'yup'
 import { Form } from 'vee-validate'
