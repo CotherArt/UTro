@@ -1,20 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import HomeView from '@/views/StoreView.vue'
-import SiteMapView from '@/views/SiteMapView.vue'
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
       name: 'home',
-      component: () => HomeView
+      component: () => import('@/views/StoreView.vue')
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/auth/InicioSesionView.vue')
+      component: () => import('@/views/auth/LogInView.vue')
     },
     {
       path: '/restore',
@@ -25,11 +22,6 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: () => import('@/views/auth/RegistrarseView.vue')
-    },
-    {
-      path: '/communuty',
-      name: 'community',
-      component: () => import('@/views/CommunityView.vue')
     },
     {
       path: '/contact',
@@ -44,17 +36,17 @@ const router = createRouter({
     {
       path: '/map',
       name: 'map',
-      component: SiteMapView
-    },
-    {
-      path: '/404',
-      name: '404',
-      component: () => import('@/views/404View.vue')
+      component: () => import('@/views/SiteMapView.vue')
     },
     {
       path: '/user/settings',
       name: 'settings',
       component: () => import('@/views/user/SettingsView.vue')
+    },
+    {
+      path: '/search/:name',
+      name: 'search',
+      component: () => import('@/views/search/SearchView.vue')
     }
   ]
 })

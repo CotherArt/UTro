@@ -1,7 +1,5 @@
 <template>
-  <div class="flex justify-content-center w-full">
-    <TheLogin />
-  </div>
+  <TheLogin />
 </template>
 
 <script setup lang="ts">

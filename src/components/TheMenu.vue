@@ -10,7 +10,13 @@
       </template>
       <template #end>
         <div class="flex align-items-center gap-2">
-          <InputText placeholder="Search" type="text" class="w-8rem sm:w-auto" />
+          <InputText
+            placeholder="Search"
+            type="text"
+            class="w-8rem sm:w-auto"
+            :value="searchValue"
+          />
+          <Button @click="search" label="search" icon="pi pi-search" />
           <Avatar
             v-if="authStore.user"
             :image="authStore.avatarImage"
@@ -31,14 +37,19 @@ import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 //stores
 import { useAuthStore } from '@/stores/auth'
+import { useSteamStore } from '@/stores/steam'
 //components
-import Menubar from 'primevue/menubar'
+import type { MenuItem } from 'primevue/menuitem'
 import InputText from 'primevue/inputtext'
+import Menubar from 'primevue/menubar'
 import Avatar from 'primevue/avatar'
 import Menu from 'primevue/menu'
-import type { MenuItem } from 'primevue/menuitem'
+import Button from 'primevue/button'
 
 const authStore = useAuthStore()
+const steamStore = useSteamStore()
+
+const searchValue = ref()
 
 const router = useRouter()
 const items = ref([
@@ -62,6 +73,10 @@ const items = ref([
   {
     label: 'MAPA DE SITIO',
     command: () => router.push({ name: 'map' })
+  },
+  {
+    label: 'TEST',
+    command: () => router.push({ name: 'test' })
   }
 ])
 
@@ -90,6 +105,11 @@ const offlineItems: MenuItem[] = [
     command: () => router.push({ name: 'register' })
   }
 ]
+
+async function search() {
+  const response = await steamStore.getGamesByName(searchValue.value)
+  console.log(response)
+}
 
 const userMenu = ref()
 const userMenuItems = computed(() => {
