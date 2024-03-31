@@ -11,7 +11,7 @@ import { useAuthStore } from '@/stores/auth'
 
 const authStore = useAuthStore()
 
-onBeforeMount(async () => await authStore.getUser())
+onBeforeMount(async () => await authStore.authenticate())
 </script>
 
 <template>
@@ -20,7 +20,6 @@ onBeforeMount(async () => await authStore.getUser())
     <TheMenu />
     <TheBreadcrumb />
   </header>
-
   <RouterView />
 </template>
 

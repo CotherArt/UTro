@@ -5,22 +5,22 @@ import axios from '@/services/axios'
 import { setAccessToken, removeAccessToken } from '@/services/utils/token'
 import { toastSuccess, toastError } from '@/services/toast'
 // models
-import type { LogInByUsernameModel, SignUpModel } from '@/models/auth'
+import type { LogInByEmailModel, SignUpModel } from '@/models/auth'
 import type { AxiosError, AxiosResponse } from 'axios'
-import type { User } from '@/models/user'
+import type { UserType } from '@/models/user'
 
 export const useAuthStore = defineStore('authStore', () => {
   //STATE
-  const authUser = ref<User | null>(null)
+  const authUser = ref<UserType | null>(null)
 
   //GETTERS (computed values)
-  const avatarImage = computed(() => authUser.value?.avatar)
+  const avatarImage = computed(() => authUser.value?.profile.img)
   const user = computed(() => authUser.value)
 
   //FUNCTIONS
   const register = async (values: SignUpModel) => {
     const response = await axios
-      .post('/signup', values)
+      .post('/auth/register', values)
       .then(async (response: AxiosResponse) => {
         await setAccessToken(response.data.access_token)
         toastSuccess('✨ Usuario registrado correctamente! ✨')
@@ -34,13 +34,12 @@ export const useAuthStore = defineStore('authStore', () => {
   }
 
   // Se autentica en la API con usuario y contraseña y se obtiene el token
-  const loginByUsername = async (
-    values: LogInByUsernameModel
-  ): Promise<AxiosResponse | AxiosError> => {
+  const loginByEmail = async (values: LogInByEmailModel): Promise<AxiosResponse | AxiosError> => {
     const response = await axios
-      .post('login-by-username', JSON.stringify(values))
+      .post('/auth/login', values)
       .then(async (response: AxiosResponse) => {
         await setAccessToken(response.data.access_token)
+        await authenticate()
         return response
       })
       .catch((reason: AxiosError) => {
@@ -60,9 +59,9 @@ export const useAuthStore = defineStore('authStore', () => {
     })
   }
 
-  const getUser = async () => {
+  const authenticate = async () => {
     await axios
-      .get('/current_user')
+      .get(`/auth/authenticate`)
       .then((response: AxiosResponse) => {
         authUser.value = response.data
       })
@@ -78,10 +77,10 @@ export const useAuthStore = defineStore('authStore', () => {
     user,
     avatarImage,
     //functions
-    loginByUsername,
+    loginByEmail,
     logOut,
     register,
-    getUser,
+    authenticate,
     validateToken
   }
 })

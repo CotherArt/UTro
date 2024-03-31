@@ -11,7 +11,6 @@
           <InputText name="password" type="password" label="password:" />
           <InputText name="passwordConfirm" type="password" label="password confirm:" />
           <TheReCaptcha class="pt-2" name="recaptcha" />
-          {{ errors }}
         </template>
         <template #footer>
           <Button label="Sign in" type="submit" class="w-full" :loading="loading" />

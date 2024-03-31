@@ -3,7 +3,7 @@
     <Card class="w-full sm:w-20rem">
       <template #title>Log in</template>
       <template #content>
-        <InputText id="username" name="username" label="username:" />
+        <InputText id="email" name="email" label="email:" />
         <InputText id="password" name="password" label="password:" type="password" />
       </template>
       <template #footer>
@@ -15,7 +15,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import router from '@/router'
 // components
 import Card from 'primevue/card'
 //custom componets
@@ -27,22 +26,20 @@ import { Form } from 'vee-validate'
 // stores
 import { useAuthStore } from '@/stores/auth'
 // models
-import type { LogInByUsernameModel } from '@/models/auth'
+import type { LogInByEmailModel } from '@/models/auth'
 
 const authStore = useAuthStore()
 const loading = ref<boolean>(false)
 
 const schema = yup.object({
-  username: yup.string().required(),
+  email: yup.string().email().required(),
   password: yup.string().required()
 })
 
 async function handleSubmit(values: object) {
   loading.value = true
-  await authStore.loginByUsername(values as LogInByUsernameModel).finally(async () => {
+  await authStore.loginByEmail(values as LogInByEmailModel).finally(async () => {
     loading.value = false
-    await router.push('/')
-    window.location.reload()
   })
 }
 </script>
