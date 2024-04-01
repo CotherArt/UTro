@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!registered">
+  <div v-if="!registered" class="sm:w-21rem w-full">
     <Form @submit="handleSubmit" :validation-schema="schema">
       <Card>
         <template #title>
@@ -14,6 +14,10 @@
         </template>
         <template #footer>
           <Button label="Sign in" type="submit" class="w-full" :loading="loading" />
+          <div class="mt-4 text-center">
+            Do you already have an account?
+            <RouterLink to="login">Login</RouterLink>
+          </div>
         </template>
       </Card>
     </Form>
@@ -23,7 +27,7 @@
       <template #title> Congratulations </template>
       <template #content> you has been registered </template>
       <template #footer>
-        <Button label="Log In" type="button" class="w-full" @click="router.push('/login')" />
+        <Button label="Log In" type="button" class="w-full" @click="$router.push('/login')" />
       </template>
     </Card>
   </div>
@@ -44,7 +48,6 @@ import { Form } from 'vee-validate'
 // models
 import type { SignUpModel } from '@/models/auth'
 import { isAxiosError } from 'axios'
-import router from '@/router'
 import type { ErrorResponseData } from '@/services/axios'
 
 const authStore = useAuthStore()

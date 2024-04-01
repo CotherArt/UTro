@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-content-center w-full">
+  <div class="flex justify-content-center">
     <TheSignUp />
   </div>
 </template>

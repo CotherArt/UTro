@@ -15,5 +15,5 @@ export interface Profile {
 }
 
 export interface Authentication {
-  role: string
+  role: 'Administrator' | 'User' | 'Moderator' | 'Guest'
 }
