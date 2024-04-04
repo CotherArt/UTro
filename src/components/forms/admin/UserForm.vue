@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Form :initial-values="initialValues" @submit="handleSubmit" :validation-schema="schema">
+    <Form :initial-values="prop.initialValues" @submit="handleSubmit" :validation-schema="schema">
       <InputText id="username" name="username" label="username:" />
       <InputText id="email" name="email" label="email:" />
       <Dropdown
@@ -35,7 +35,7 @@ import Dropdown from '@/components/custom/Dropdown.vue'
 import * as yup from 'yup'
 import { Form } from 'vee-validate'
 // stores
-import { useUsersStore } from '@/stores/users'
+import { useUsersStore } from '@/stores/admin/users'
 import type { UserType } from '@/models/user'
 const usersStore = useUsersStore()
 // models
@@ -74,3 +74,4 @@ const handleCancel = () => {
 </script>
 
 <style scoped></style>
+@/stores/admin/users

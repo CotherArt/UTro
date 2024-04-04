@@ -13,7 +13,7 @@ import Button from '@/components/custom/Button.vue'
 
 import { toastError, toastInfo, toastSuccess, toastWarn } from '@/services/toast'
 
-import { useUsersStore } from '@/stores/users'
+import { useUsersStore } from '@/stores/admin/users'
 
 const usersStore = useUsersStore()
 

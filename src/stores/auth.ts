@@ -112,6 +112,20 @@ export const useAuthStore = defineStore('authStore', () => {
       })
   }
 
+  const updateProfileImg = async (imgBase64: string) => {
+    try {
+      await axios.patch(`/users/${authUser.value?._id}`, {
+        profile: {
+          img: imgBase64
+        }
+      })
+      authenticate()
+      toastSuccess('✨ Imagen actualizada correctamente! ✨')
+    } catch (error) {
+      toastError('💩 Error al actualizar imagen de usuario, por favor intente otra vez 💩')
+    }
+  }
+
   return {
     //state
     authUser,
@@ -126,6 +140,7 @@ export const useAuthStore = defineStore('authStore', () => {
     logOut,
     register,
     authenticate,
-    validateToken
+    validateToken,
+    updateProfileImg
   }
 })

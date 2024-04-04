@@ -2,6 +2,16 @@
   <div class="card">
     <Button label="New User" @click="modalNewVisible = true" :disabled="true"></Button>
     <DataTable size="small" stripedRows :value="usersStore.users" tableStyle="min-width: 50rem">
+      <Column filed="profile" header="img" style="width: 3rem">
+        <template #body="slotProps">
+          <img
+            v-if="slotProps.data.profile?.img"
+            :src="slotProps.data.profile?.img"
+            alt="webo"
+            class="w-3rem border-circle"
+          />
+        </template>
+      </Column>
       <Column field="_id" header="ID"></Column>
       <Column field="username" header="Name"></Column>
       <Column field="email" header="Email"></Column>
@@ -87,12 +97,11 @@ import Modal from '@/components/custom/Modal.vue'
 import NewUserForm from '@/components/forms/admin/NewUserForm.vue'
 import { ref, onMounted } from 'vue'
 
-import { useUsersStore } from '@/stores/users'
+import { useUsersStore } from '@/stores/admin/users'
 import type { UserType } from '@/models/user'
 import UserForm from '@/components/forms/admin/UserForm.vue'
 
 const usersStore = useUsersStore()
-const products = ref()
 
 const modalEditVisible = ref(false)
 const modalDeleteVisible = ref(false)
@@ -130,23 +139,10 @@ const handleDelete = (data: UserType) => {
   selectedRow.value = data
 }
 
-onMounted(() => {
-  usersStore.getUsers()
-  products.value = [
-    {
-      id: '1000',
-      code: 'f230fh0g3',
-      name: 'Bamboo Watch',
-      description: 'Product Description',
-      image: 'bamboo-watch.jpg',
-      price: 65,
-      category: 'Accessories',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5
-    }
-  ]
+onMounted(async () => {
+  await usersStore.getUsers()
 })
 </script>
 
 <style scoped></style>
+@/stores/admin/users
