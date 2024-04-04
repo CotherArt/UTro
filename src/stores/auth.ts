@@ -11,7 +11,7 @@ import type { User } from '@/models/user'
 
 export const useAuthStore = defineStore('authStore', () => {
   //STATE
-  const authUser = ref<User | null>(null)
+  const authUser = ref<User | null>(null) 
 
   //GETTERS (computed values)
   const avatarImage = computed(() => authUser.value?.avatar)
@@ -65,6 +65,12 @@ export const useAuthStore = defineStore('authStore', () => {
       .get('/current_user')
       .then((response: AxiosResponse) => {
         authUser.value = response.data
+
+        authUser.value = {
+          username: "pepe",
+          avatar: "https://sakuragates.com/wp-content/uploads/2023/04/Good-Smile-Hello-Puella-Magi-Madoka-Magica-The-Movie-Rebellion-Madoka-Kaname-4.webp",
+          email: "pepe@gmail.com"
+        }
       })
       .catch(() => {
         authUser.value = null
