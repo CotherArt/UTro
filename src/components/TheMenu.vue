@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <Menubar :model="items">
+    <Menubar :model="authStore.menuRoutes">
       <template #start>
         <img
           src="../assets/icons/vapor.svg"
@@ -10,18 +10,14 @@
       </template>
       <template #end>
         <div class="flex align-items-center gap-2">
-          <InputText
-            placeholder="Search"
-            type="text"
-            class="w-8rem sm:w-auto"
-            :value="searchValue"
-          />
-          <Button @click="search" label="search" icon="pi pi-search" />
+          <InputText placeholder="Search" type="text" class="w-9rem" :value="searchValue" />
+          <Button @click="search" icon="pi pi-search" size="small" />
           <Avatar
             v-if="authStore.user"
             :image="authStore.avatarImage"
             shape="circle"
             @click="toggle"
+            class="cursor-pointer"
           />
           <Avatar v-else icon="pi pi-user" shape="circle" @click="toggle" />
         </div>
@@ -44,41 +40,15 @@ import InputText from 'primevue/inputtext'
 import Menubar from 'primevue/menubar'
 import Avatar from 'primevue/avatar'
 import Menu from 'primevue/menu'
-import Button from 'primevue/button'
+import Button from '@/components/custom/Button.vue'
 
 const authStore = useAuthStore()
 const steamStore = useSteamStore()
 
 const searchValue = ref()
+const userMenu = ref()
 
 const router = useRouter()
-const items = ref([
-  {
-    label: 'TIENDA',
-    items: [
-      {
-        label: 'Inicio',
-        command: () => router.push({ name: 'home' })
-      },
-      {
-        label: 'Lista de deseados',
-        command: () => router.push({ name: 'wishlist' })
-      }
-    ]
-  },
-  {
-    label: 'CONTACT',
-    command: () => router.push({ name: 'contact' })
-  },
-  {
-    label: 'MAPA DE SITIO',
-    command: () => router.push({ name: 'map' })
-  },
-  {
-    label: 'TEST',
-    command: () => router.push({ name: 'test' })
-  }
-])
 
 const loggedItems: MenuItem[] = [
   {
@@ -106,12 +76,6 @@ const offlineItems: MenuItem[] = [
   }
 ]
 
-async function search() {
-  const response = await steamStore.getGamesByName(searchValue.value)
-  console.log(response)
-}
-
-const userMenu = ref()
 const userMenuItems = computed(() => {
   let items: MenuItem[] = []
   if (authStore.user) {
@@ -122,12 +86,16 @@ const userMenuItems = computed(() => {
   return items
 })
 
+async function search() {
+  const response = await steamStore.getGamesByName(searchValue.value)
+  console.log(response)
+}
 const toggle = (event: Event) => {
   userMenu.value.toggle(event)
 }
-const logOutHandler = () => {
+const logOutHandler = async () => {
   authStore.logOut()
-  router.push('/')
+  await router.push('/')
   window.location.reload()
 }
 </script>

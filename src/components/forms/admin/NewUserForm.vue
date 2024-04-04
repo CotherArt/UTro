@@ -1,36 +1,18 @@
 <template>
-  <div v-if="!registered" class="sm:w-21rem w-full">
-    <Form @submit="handleSubmit" :validation-schema="schema">
-      <Card>
-        <template #title>
-          <div class="text-center">Create your account</div>
-        </template>
-        <template #content>
-          <InputText name="username" label="user name:" />
-          <InputText name="email" label="email:" />
-          <InputText name="password" type="password" label="password:" />
-          <InputText name="passwordConfirm" type="password" label="password confirm:" />
-          <TheReCaptcha class="pt-2" name="recaptcha" />
-        </template>
-        <template #footer>
-          <Button label="Sign in" type="submit" class="w-full" :loading="loading" />
-          <div class="mt-4 text-center">
-            Do you already have an account?
-            <RouterLink to="login">Login</RouterLink>
-          </div>
-        </template>
-      </Card>
-    </Form>
-  </div>
-  <div v-else>
-    <Card class="p-4">
-      <template #title> Congratulations </template>
-      <template #content> you has been registered </template>
+  <Form @submit="handleSubmit" :validation-schema="schema">
+    <Card>
+      <template #content>
+        <InputText name="username" label="user name:" />
+        <InputText name="email" label="email:" />
+        <InputText name="password" type="password" label="password:" />
+        <InputText name="passwordConfirm" type="password" label="password confirm:" />
+        <TheReCaptcha class="pt-2" name="recaptcha" />
+      </template>
       <template #footer>
-        <Button label="Log In" type="button" class="w-full" @click="$router.push('/login')" />
+        <Button label="Sign in" type="submit" class="w-full" :loading="loading" />
       </template>
     </Card>
-  </div>
+  </Form>
 </template>
 
 <script setup lang="ts">
@@ -49,6 +31,10 @@ import { Form } from 'vee-validate'
 import type { SignUpModel } from '@/models/auth'
 import { isAxiosError } from 'axios'
 import type { ErrorResponseData } from '@/services/axios'
+
+const emit = defineEmits<{
+  submit: []
+}>()
 
 const authStore = useAuthStore()
 
@@ -81,6 +67,7 @@ async function handleSubmit(values: object) {
     return
   }
   registered.value = true
+  emit('submit')
 }
 </script>
 
