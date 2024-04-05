@@ -33,7 +33,10 @@ const data = ref({
   type: 'person',
   data: {
     image: 'https://cdn-icons-png.freepik.com/512/5188/5188738.png?ga=GA1.1.2013646664.1706826289',
-    name: 'INICIO'
+    name: 'INICIO',
+    command: () => {
+          router.push({ name: 'home' })
+        }
   },
   children: [
     {
