@@ -126,6 +126,15 @@ export const useAuthStore = defineStore('authStore', () => {
     }
   }
 
+  const updatePassword = async (data: { password: string; newPassword: string }) => {
+    try {
+      await axios.patch(`/users/${authUser.value?._id}/password`, data)
+      toastSuccess('✨ Contraseña actualizada correctamente! ✨')
+    } catch (error) {
+      toastError('💩 Error al actualizar contraseña, por favor intente otra vez 💩')
+    }
+  }
+
   return {
     //state
     authUser,
@@ -141,6 +150,7 @@ export const useAuthStore = defineStore('authStore', () => {
     register,
     authenticate,
     validateToken,
-    updateProfileImg
+    updateProfileImg,
+    updatePassword
   }
 })

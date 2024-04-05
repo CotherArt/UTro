@@ -1,7 +1,6 @@
 <template>
-  <div class="flex gap-1">
-    <div class="w-12rem bg-purple-800 border-round p-1">sidemenu</div>
-    <div class="w-full bg-purple-900 border-round p-1">
+  <div class="flex flex-column gap-4 align-items-center w-full bg-purple-900 border-round p-1">
+    <div class="flex flex-column align-items-center gap-2">
       <h2 class="m-0">Foto</h2>
       <img v-if="avatarImage" :src="avatarImage" class="w-5rem border-circle" alt="uploaded img" />
       <img
@@ -13,6 +12,7 @@
       <div v-else class="w-5rem h-5rem border-circle bg-primary-reverse mb-1"></div>
       <div class="flex gap-1">
         <FileUpload
+          class="border-round-3xl"
           mode="basic"
           name="demo[]"
           url="/api/upload"
@@ -24,6 +24,18 @@
         <Button label="Upload" @click="setImage()" :disabled="uploadDisabled" />
       </div>
     </div>
+    <div>
+      <h2 class="m-0">Password</h2>
+      <Form @submit="handleSubmit" :validation-schema="schema" class="w-20rem">
+        <InputText name="password" type="password" label="password:" />
+        <InputText name="newPassword" type="password" label="new password:" />
+        <InputText name="passwordConfirm" type="password" label="password confirm:" />
+        <TheReCaptcha class="pt-2" name="recaptcha" />
+        <div class="flex justify-content-end">
+          <Button label="Save" type="submit" class="mt-2 w-8rem" />
+        </div>
+      </Form>
+    </div>
   </div>
 </template>
 
@@ -31,8 +43,13 @@
 import { ref } from 'vue'
 // primevue
 import FileUpload from 'primevue/fileupload'
-import Button from 'primevue/button'
+import Button from '@/components/custom/Button.vue'
 import { toastError } from '@/services/toast'
+
+// form
+import * as yup from 'yup'
+import InputText from '@/components/custom/InputText.vue'
+import { Form } from 'vee-validate'
 // store
 import { useAuthStore } from '@/stores/auth'
 
@@ -42,6 +59,24 @@ const authStore = useAuthStore()
 
 const avatarImage = ref()
 const uploadDisabled = ref(true)
+
+const schema = yup.object({
+  password: yup.string().required(),
+  newPassword: yup.string().required().min(6),
+  passwordConfirm: yup
+    .string()
+    .required()
+    .min(6)
+    .oneOf([yup.ref('newPassword')])
+})
+
+const handleSubmit = async (values: any) => {
+  const params = {
+    password: values.password,
+    newPassword: values.newPassword
+  }
+  await authStore.updatePassword(params)
+}
 
 const handleUpload = async (event: { files: any[] }) => {
   try {
