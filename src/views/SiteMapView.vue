@@ -34,9 +34,7 @@ const data = ref({
   data: {
     image: 'https://cdn-icons-png.freepik.com/512/5188/5188738.png?ga=GA1.1.2013646664.1706826289',
     name: 'INICIO',
-    command: () => {
-          router.push({ name: 'home' })
-        }
+    
   },
   children: [
     {
@@ -51,25 +49,12 @@ const data = ref({
         }
       },
       children: [
-      {
-      key: '0_0',
-      type: 'person',
-      data: {
-        image:
-          'https://cdn-icons-png.freepik.com/512/1179/1179601.png?ga=GA1.1.2013646664.1706826289&amp',
-        name: 'INICIO',
-        command: () => {
-          router.push({ name: 'home' })
-        }
-      },
-        },
-        
         {
       key: '0_0',
       type: 'person',
       data: {
         image:
-          'https://cdn-icons-png.freepik.com/512/1179/1179601.png?ga=GA1.1.2013646664.1706826289&amp',
+          'https://cdn-icons-png.freepik.com/512/1443/1443708.png?ga=GA1.1.214440572.1712280655&amp;',
         name: 'LISTA DE DESEADOS',
         command: () => {
           router.push({ name: 'home' })
@@ -108,7 +93,7 @@ const data = ref({
       data: {
         image:
           'https://cdn-icons-png.freepik.com/512/1650/1650276.png?ga=GA1.1.2013646664.1706826289&amp',
-        name: 'REGISTRO',
+        name: 'ACCESO',
         command: () => {
           router.push({ name: 'login' })
         }
@@ -119,7 +104,7 @@ const data = ref({
       type: 'person',
       data: {
         image:
-          'https://cdn-icons-png.freepik.com/512/1179/1179601.png?ga=GA1.1.2013646664.1706826289&amp',
+          'https://cdn-icons-png.freepik.com/512/7257/7257807.png?ga=GA1.1.214440572.1712280655&amp;',
         name: 'REGISTRO',
         command: () => {
           router.push({ name: 'register' })
@@ -132,7 +117,7 @@ const data = ref({
       type: 'person',
       data: {
         image:
-          'https://cdn-icons-png.freepik.com/512/1179/1179601.png?ga=GA1.1.2013646664.1706826289&amp',
+          'https://cdn-icons-png.freepik.com/512/1659/1659087.png?ga=GA1.1.214440572.1712280655&amp;',
         name: 'CONFIGURACIÓN',
         command: () => {
           router.push({ name: 'settings' })
