@@ -48,14 +48,31 @@ const data = ref({
         }
       },
       children: [
-        {
-          key: '0_0_0',
-          label: 'HOME'
-        },
-        {
-          key: '0_0_"1',
-          label: 'LISTA DE DESEOS'
+      {
+      key: '0_0',
+      type: 'person',
+      data: {
+        image:
+          'https://cdn-icons-png.freepik.com/512/1179/1179601.png?ga=GA1.1.2013646664.1706826289&amp',
+        name: 'INICIO',
+        command: () => {
+          router.push({ name: 'home' })
         }
+      },
+        },
+        
+        {
+      key: '0_0',
+      type: 'person',
+      data: {
+        image:
+          'https://cdn-icons-png.freepik.com/512/1179/1179601.png?ga=GA1.1.2013646664.1706826289&amp',
+        name: 'LISTA DE DESEADOS',
+        command: () => {
+          router.push({ name: 'home' })
+        }
+      },
+        },
       ]
     },
     {
@@ -76,7 +93,10 @@ const data = ref({
       data: {
         image:
           'https://cdn-icons-png.freepik.com/512/1371/1371317.png?ga=GA1.1.2013646664.1706826289&amp',
-        name: 'CONTACTO'
+        name: 'CONTACTO',
+        command: () => {
+          router.push({ name: 'contact' })
+        }
       }
     },
     {
@@ -89,7 +109,34 @@ const data = ref({
         command: () => {
           router.push({ name: 'login' })
         }
-      }
+      },
+      children: [
+      {
+      key: '0_0',
+      type: 'person',
+      data: {
+        image:
+          'https://cdn-icons-png.freepik.com/512/1179/1179601.png?ga=GA1.1.2013646664.1706826289&amp',
+        name: 'REGISTRO',
+        command: () => {
+          router.push({ name: 'register' })
+        }
+      },
+        },
+        
+        {
+      key: '0_0',
+      type: 'person',
+      data: {
+        image:
+          'https://cdn-icons-png.freepik.com/512/1179/1179601.png?ga=GA1.1.2013646664.1706826289&amp',
+        name: 'CONFIGURACIÓN',
+        command: () => {
+          router.push({ name: 'settings' })
+        }
+      },
+        },
+      ]
     }
   ]
 })
