@@ -13,8 +13,8 @@ import type { UserType } from '@/models/user'
 
 export const useAuthStore = defineStore('authStore', () => {
   //STATE
-  const authUser = ref<UserType | null>(null)
-  const menuRoutes = ref<MenuItem[]>([
+
+  const defaultRoutes: MenuItem[] = [
     {
       label: '🛒TIENDA',
       items: [
@@ -36,7 +36,7 @@ export const useAuthStore = defineStore('authStore', () => {
       label: '🗺️MAPA DE SITIO',
       command: () => router.push({ name: 'map' })
     }
-  ])
+  ]
   const adminRoutes: MenuItem[] = [
     {
       label: '😎 ADMIN',
@@ -49,6 +49,8 @@ export const useAuthStore = defineStore('authStore', () => {
       ]
     }
   ]
+  const authUser = ref<UserType | null>(null)
+  const menuRoutes = ref<MenuItem[]>(defaultRoutes)
 
   //GETTERS (computed values)
   const avatarImage = computed(() => authUser.value?.profile.img)
@@ -104,7 +106,7 @@ export const useAuthStore = defineStore('authStore', () => {
       .then((response: AxiosResponse) => {
         authUser.value = response.data
         if (response.data.authentication.role === 'Administrator') {
-          menuRoutes.value.push(...adminRoutes)
+          menuRoutes.value = defaultRoutes.concat(adminRoutes)
         }
       })
       .catch(() => {
