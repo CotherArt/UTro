@@ -28,7 +28,7 @@
       <h2 class="m-0">Password</h2>
       <Form @submit="handleSubmit" :validation-schema="schema" class="w-20rem">
         <InputText name="password" type="password" label="password:" />
-        <InputText name="newPassword" type="password" label="newPassword:" />
+        <InputText name="newPassword" type="password" label="new password:" />
         <InputText name="passwordConfirm" type="password" label="password confirm:" />
         <TheReCaptcha class="pt-2" name="recaptcha" />
         <div class="flex justify-content-end">
