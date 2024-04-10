@@ -59,11 +59,13 @@ const registered = ref<boolean>(false)
 const schema = yup.object({
   username: yup.string().required().min(5),
   email: yup.string().required().email(),
-  password: yup.string().required().min(6),
+  password: yup
+    .string()
+    .required()
+    .matches(/^(?=.*[A-Za-z])(?=.*\d).{6,}$/, { excludeEmptyString: true }),
   passwordConfirm: yup
     .string()
     .required()
-    .min(6)
     .oneOf([yup.ref('password')]),
   recaptcha: yup.string().required()
 })
